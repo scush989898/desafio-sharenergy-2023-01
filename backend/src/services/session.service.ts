@@ -5,19 +5,20 @@ import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { User } from "../entities/user.entity";
+import { getObjectOrThrowError } from "../utils/service.utils";
 
 const createSessionService = async ({
   username,
   password,
 }: IUserRegisterRequest): Promise<string> => {
   const userRepository = AppDataSource.getRepository(User);
-
-  const user = await userRepository.findOneBy({ username });
-
-  if (!user) throw new AppError("Invalid username or password", 401);
-
+  const user = await getObjectOrThrowError(
+    userRepository,
+    { username },
+    "Invalid username or password",
+    401
+  );
   const matchPassword = await compare(password, user.password);
-
   if (!matchPassword) throw new AppError("Invalid credentials", 403);
 
   const token = jwt.sign(
