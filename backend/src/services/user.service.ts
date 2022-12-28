@@ -1,5 +1,4 @@
 import AppDataSource from "../data-source";
-import { AppError } from "../errors/app.error";
 import { IUserRegisterRequest, IUserUpdateRequest } from "../interfaces/user.interface";
 import { User } from "../entities/user.entity";
 import { hash } from "bcryptjs";
@@ -10,7 +9,7 @@ const userRepository = AppDataSource.getRepository(User);
 const createUserService = async (user: IUserRegisterRequest): Promise<User> => {
 
   user.password = await hash(user.password, 10);
-  await resourceAlreadyExists(userRepository, { username: user.username }, "User");
+  await resourceAlreadyExists(userRepository, { username: user.username });
   const newUser = userRepository.create(user);
   return await userRepository.save(newUser);
 

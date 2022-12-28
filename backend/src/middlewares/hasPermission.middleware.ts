@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { AppError } from "../errors/app.error";
+import { Message } from "../utils/messages.utils";
+import { StatusCode } from "../utils/statusCode.utils";
 
 const hasPermission = async (req: Request, res: Response, next: NextFunction) => {
   let paramId = req.params.id;
@@ -16,7 +18,7 @@ const hasPermission = async (req: Request, res: Response, next: NextFunction) =>
   });
 
   if (!(req.method == "GET" || paramId == tokenId)) {
-    throw new AppError("You dont have permission to perform this action", 403);
+    throw new AppError(Message.noPermission, StatusCode.forbidden);
   }
 
   next();

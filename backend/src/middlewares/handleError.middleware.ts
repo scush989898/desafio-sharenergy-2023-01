@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/app.error";
+import { Message } from "../utils/messages.utils";
+import { StatusCode } from "../utils/statusCode.utils";
 
 export const handleErrorMiddleware = async (
   error: Error,
@@ -12,7 +14,7 @@ export const handleErrorMiddleware = async (
       message: error.message,
     });
   }
-  return res.status(500).json({
-    message: "Internal Error",
+  return res.status(StatusCode.internalServerError).json({
+    message: Message.internalServerError,
   });
 };

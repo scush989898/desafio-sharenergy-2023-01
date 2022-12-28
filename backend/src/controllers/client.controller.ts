@@ -10,7 +10,7 @@ import {
 const createClientController = async (req: Request, res: Response) => {};
 
 const getOneClientController = async (req: Request, res: Response) => {
-  return res.status(200).json({msg: "ola mundo"});
+  return res.json({msg: "ola mundo"});
 };
 
 const listAllClientsController = async (req: Request, res: Response) => {};

@@ -1,31 +1,37 @@
 import { AppError } from "../errors/app.error";
+import { Message } from "./messages.utils";
+import { StatusCode } from "./statusCode.utils";
 
 const getObjectOrThrowError = async (
-  Repository: any,
+  repository: any,
   options: any,
-  message: string = "Not Found",
-  httpcode: number = 404
 ) => {
-  const object = await Repository.findOne({
+  const object = await repository.findOne({
     where: {
       ...options,
     },
   });
-  if (!object) throw new AppError(message, httpcode);
+  if (!object) throw new AppError(Message.notFound, StatusCode.notFound);
   return object;
 };
 
+const getListOrThrowError = async () => {};
+// 
+// 
+// 
+// 
+// 
+
 const resourceAlreadyExists = async (
-  Repository: any,
+  repository: any,
   options: any,
-  EntityName: string = "Resource"
 ) => {
-  const object = await Repository.findOne({
+  const object = await repository.findOne({
     where: {
       ...options,
     },
   });
-  if (object) throw new AppError(`${EntityName} Already exists`, 409);
+  if (object) throw new AppError(Message.alreadyExists, StatusCode.conflict);
 };
 
-export { getObjectOrThrowError, resourceAlreadyExists };
+export { getObjectOrThrowError, resourceAlreadyExists, getListOrThrowError };

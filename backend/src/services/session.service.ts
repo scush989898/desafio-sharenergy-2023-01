@@ -6,20 +6,17 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { User } from "../entities/user.entity";
 import { getObjectOrThrowError } from "../utils/service.utils";
+import { Message } from "../utils/messages.utils";
+import { StatusCode } from "../utils/statusCode.utils";
 
 const createSessionService = async ({
   username,
   password,
 }: IUserRegisterRequest): Promise<string> => {
   const userRepository = AppDataSource.getRepository(User);
-  const user = await getObjectOrThrowError(
-    userRepository,
-    { username },
-    "Invalid username or password",
-    401
-  );
+  const user = await getObjectOrThrowError(userRepository, { username });
   const matchPassword = await compare(password, user.password);
-  if (!matchPassword) throw new AppError("Invalid credentials", 403);
+  if (!matchPassword) throw new AppError(Message.invalidCredentials, StatusCode.unauthorized);
 
   const token = jwt.sign(
     {
