@@ -6,7 +6,7 @@ class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ length: 90 })
+  @Column({ length: 90, unique: true })
   username: string;
 
   @Column({ length: 170 })

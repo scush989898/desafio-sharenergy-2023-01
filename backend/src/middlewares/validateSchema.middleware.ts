@@ -10,6 +10,7 @@ const validateSchema =
         abortEarly: false,
       });
       req.body = validated;
+      
       next();
     } catch (error: any) {
       return res.status(400).json({
