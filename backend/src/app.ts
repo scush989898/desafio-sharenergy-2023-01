@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 app.use("/login", sessionRoutes);
 app.use("/user", userRoutes);
 app.use("/client", clientRoutes);

@@ -17,7 +17,7 @@ const hasPermission = async (req: Request, res: Response, next: NextFunction) =>
     tokenId = decoded.sub;
   });
 
-  if (!(req.method == "GET" || paramId == tokenId)) {
+  if (!(paramId == tokenId)) {
     throw new AppError(Message.noPermission, StatusCode.forbidden);
   }
 

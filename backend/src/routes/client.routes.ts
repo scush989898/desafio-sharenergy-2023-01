@@ -13,8 +13,6 @@ import validateParam from "../middlewares/validateUUID.middleware";
 
 const clientRoutes = Router();
 
-clientRoutes.get("/:id", validateParam, ensureAuthMiddleware, getOneClientController);
-clientRoutes.get("", ensureAuthMiddleware, listAllClientsController);
 clientRoutes.post(
   "",
   ensureAuthMiddleware,
@@ -22,6 +20,8 @@ clientRoutes.post(
   createClientController
 );
 
+clientRoutes.get("", ensureAuthMiddleware, listAllClientsController);
+clientRoutes.get("/:id", validateParam, ensureAuthMiddleware, getOneClientController);
 clientRoutes.patch(
   "/:id",
   validateParam,

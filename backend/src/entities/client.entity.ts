@@ -15,7 +15,7 @@ class Client {
   @Column({ length: 11 })
   phone: string;
 
-  @OneToOne(() => Address, { eager: true })
+  @OneToOne(() => Address, { eager: true, onDelete: "CASCADE" })
   @JoinColumn()
   address: Address;
 
