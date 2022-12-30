@@ -13,7 +13,10 @@ class Message {
   static usernameAlreadyExists: string = "Username already exists";
   static cpfAlreadyExists: string = "CPF number already exists";
   static cpfOrEmailAlreadyExists: string =
-    "there is already a customer with that cpf number or email address";
+    "There is already a customer with that cpf number or email address";
+  static nameField: string = "Field name should not contain special characters";
+  static cpfField: string = "Field CPF should contain only 11 numbers between [0-9]";
+  static phoneField: string = "Field phone should contain only 11 numbers between [0-9]";
 }
 
 class SchemaMessage {

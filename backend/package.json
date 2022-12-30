@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "build": "tsc",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "test": "cross-env SECRET_KEY=1234 NODE_ENV=test jest "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -24,11 +25,19 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/babel__generator": "^7.6.4",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.15",
+    "@types/jest": "^28.1.4",
     "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^18.11.18",
+    "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.0",
+    "jest": "^28.1.2",
+    "sqlite3": "^5.0.8",
+    "supertest": "^6.2.4",
+    "ts-jest": "^28.0.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.4"
   }

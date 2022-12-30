@@ -2,11 +2,21 @@ import { IClientRequest, IClientUpdateRequest } from "../interfaces/client.inter
 import * as yup from "yup";
 import { SchemaOf } from "yup";
 import { SchemaMessage } from "../utils/messages.utils";
+import { Regex } from "../utils/regex.utils";
+import { Message } from "../utils/messages.utils";
 
 const clientRegisterSchema: SchemaOf<IClientRequest> = yup.object().shape({
-  name: yup.string().required().max(90, SchemaMessage.invalidName),
+  name: yup
+    .string()
+    .required()
+    .max(90, SchemaMessage.invalidName)
+    .matches(Regex.genericNameField, Message.nameField),
   email: yup.string().email().required().max(70, SchemaMessage.invalidEmail),
-  phone: yup.string().required().max(11, SchemaMessage.invalidPhone),
+  phone: yup
+    .string()
+    .required()
+    .max(11, SchemaMessage.invalidPhone)
+    .matches(Regex.phone, Message.phoneField),
   address: yup.object({
     district: yup.string().required().max(120, SchemaMessage.invalidDistrict),
     zipCode: yup.string().required().max(8, SchemaMessage.invalidZipCode),
@@ -15,13 +25,20 @@ const clientRegisterSchema: SchemaOf<IClientRequest> = yup.object().shape({
     number: yup.string().max(10, SchemaMessage.invalidNumber),
     complement: yup.string().max(20, SchemaMessage.invalidComplement),
   }),
-  cpf: yup.string().required().max(11, SchemaMessage.invalidCPF),
+  cpf: yup
+    .string()
+    .required()
+    .max(11, SchemaMessage.invalidCPF)
+    .matches(Regex.cpf, Message.cpfField),
 });
 
 const clientUpdateSchema: SchemaOf<IClientUpdateRequest> = yup.object().shape({
-  name: yup.string().max(90, SchemaMessage.invalidName),
+  name: yup
+    .string()
+    .max(90, SchemaMessage.invalidName)
+    .matches(Regex.genericNameField, Message.nameField),
   email: yup.string().email().max(70, SchemaMessage.invalidEmail),
-  phone: yup.string().max(11, SchemaMessage.invalidPhone),
+  phone: yup.string().max(11, SchemaMessage.invalidPhone).matches(Regex.phone, Message.phoneField),
   address: yup.object({
     district: yup.string().max(120, SchemaMessage.invalidDistrict),
     zipCode: yup.string().max(8, SchemaMessage.invalidZipCode),
@@ -30,7 +47,7 @@ const clientUpdateSchema: SchemaOf<IClientUpdateRequest> = yup.object().shape({
     number: yup.string().max(10, SchemaMessage.invalidNumber),
     complement: yup.string().max(20, SchemaMessage.invalidComplement),
   }),
-  cpf: yup.string().max(11, SchemaMessage.invalidCPF),
+  cpf: yup.string().max(11, SchemaMessage.invalidCPF).matches(Regex.cpf, Message.cpfField),
 });
 
 export { clientRegisterSchema, clientUpdateSchema };
