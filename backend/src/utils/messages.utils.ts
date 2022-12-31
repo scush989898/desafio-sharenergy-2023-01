@@ -2,7 +2,7 @@ class Message {
   static invalidCredentials: string = "Invalid credentials";
   static dataSourceInit: string = "The database has initialized";
   static errorDataSourceInit: string = "Error during data source initialization";
-  static serverStarted: string = "Server listening";
+  static serverStarted: string = "Server is running";
   static invalidToken: string = "Invalid token";
   static internalServerError: string = "Internal server error";
   static noPermission: string = "You dont have permission to perform this action";

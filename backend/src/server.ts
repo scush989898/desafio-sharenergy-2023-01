@@ -1,17 +1,17 @@
 import app from "./app";
-import AppDataSource from "./data-source";
 import { Message } from "./utils/messages.utils";
+import mongoose from "mongoose";
+import "dotenv/config";
 
 (async () => {
-  await AppDataSource.initialize()
-    .then(() => console.log(Message.dataSourceInit))
-    .catch((err) => {
-      console.error(Message.errorDataSourceInit, err);
-    });
+  await mongoose
+    .connect(String(process.env.MONGOURL))
+    .then(() => {
+      console.log(Message.dataSourceInit);
+    })
+    .catch((err) => console.log(err));
 
-  const ServerPort = 3000;
-
-  app.listen(ServerPort, () => {
-    console.log(`${Message.serverStarted} on port ${ServerPort}`);
+  app.listen(3000, () => {
+    console.log(Message.serverStarted);
   });
 })();

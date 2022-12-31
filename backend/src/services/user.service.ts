@@ -1,51 +1,43 @@
-import AppDataSource from "../data-source";
 import { IUserRegisterRequest, IUserUpdateRequest } from "../interfaces/user.interface";
-import { User } from "../entities/user.entity";
 import { hash } from "bcryptjs";
 import { getObjectOrThrowError, resourceAlreadyExists } from "../utils/service.utils";
 import { Message } from "../utils/messages.utils";
+import { UserModel } from "../models/user.model";
 
-const userRepository = AppDataSource.getRepository(User);
-
-const createUserService = async (user: IUserRegisterRequest): Promise<User> => {
+const createUserService = async (user: IUserRegisterRequest): Promise<any> => {
   user.password = await hash(user.password, 10);
   await resourceAlreadyExists(
-    userRepository,
+    UserModel,
     { username: user.username },
     Message.usernameAlreadyExists
   );
-  const newUser = userRepository.create(user);
-  return await userRepository.save(newUser);
+  return await UserModel.create(user);
 };
 
-const getUserProfileService = async (id: string): Promise<User> => {
-  return await getObjectOrThrowError(userRepository, { id });
+const getUserProfileService = async (id: string): Promise<any> => {
+  return await getObjectOrThrowError(UserModel, { _id: id });
 };
 
-const updateUserService = async (id: string, newData: IUserUpdateRequest): Promise<User> => {
+const updateUserService = async (id: string, newData: IUserUpdateRequest): Promise<any> => {
   if (newData.password) {
     newData.password = await hash(newData.password, 10);
   }
-
-  const currentUser = await getObjectOrThrowError(userRepository, { id });
+  const currentUser = await getObjectOrThrowError(UserModel, { _id: id });
 
   if (newData.username && newData.username != currentUser.username) {
     await resourceAlreadyExists(
-      userRepository,
+      UserModel,
       { username: newData.username },
       Message.usernameAlreadyExists
     );
   }
-
-  const updatedUser = { ...currentUser, ...newData };
-  await userRepository.update({ id }, updatedUser);
-
-  return await getObjectOrThrowError(userRepository, { id });
+  await UserModel.updateOne({ _id: id }, newData);
+  return await getObjectOrThrowError(UserModel, { _id: id });
 };
 
 const deleteUserService = async (id: string): Promise<void> => {
-  await getObjectOrThrowError(userRepository, { id });
-  await userRepository.delete({ id });
+  await getObjectOrThrowError(UserModel, { _id: id });
+  await UserModel.deleteOne({ _id: id });
 };
 
 export { createUserService, getUserProfileService, updateUserService, deleteUserService };

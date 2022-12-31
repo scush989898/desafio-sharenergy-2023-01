@@ -5,24 +5,23 @@ import {
   getUserProfileService,
   updateUserService,
 } from "../services/user.service";
-import { instanceToPlain } from "class-transformer";
 import { StatusCode } from "../utils/statusCode.utils";
 
 const createUserController = async (req: Request, res: Response) => {
   const newUser = await createUserService(req.body);
-  return res.status(StatusCode.created).json(instanceToPlain(newUser));
+  return res.status(StatusCode.created).json(newUser);
 };
 
 const getUserProfileController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await getUserProfileService(id);
-  return res.json(instanceToPlain(user));
+  return res.json(user);
 };
 
 const updateUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await updateUserService(id, req.body);
-  return res.json(instanceToPlain(user));
+  return res.json(user);
 };
 
 const deleteUserController = async (req: Request, res: Response) => {

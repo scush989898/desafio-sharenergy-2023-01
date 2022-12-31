@@ -2,33 +2,25 @@ import { AppError } from "../errors/app.error";
 import { Message } from "./messages.utils";
 import { StatusCode } from "./statusCode.utils";
 
-const getObjectOrThrowError = async (repository: any, options: any) => {
-  const object = await repository.findOne({
-    where: {
+const getObjectOrThrowError = async (model: any, options: any) => {
+  try {
+    const object = await model.findOne({
       ...options,
-    },
-  });
-  if (!object) throw new AppError(Message.notFound, StatusCode.notFound);
-  return object;
+    });
+    if (!object) throw new Error();
+    return object;
+  } catch (error) {
+    throw new AppError(Message.notFound, StatusCode.notFound);
+  }
 };
 
-const getListOrThrowError = async (repository: any) => {
-  const list = await repository.find();
-  if (list.length == 0) throw new AppError(Message.notFound, StatusCode.notFound);
-  return list;
-};
-
-const resourceAlreadyExists = async (
-  repository: any,
-  options: any,
-  message = Message.alreadyExists
-) => {
-  const object = await repository.findOne({
-    where: {
-      ...options,
-    },
+const resourceAlreadyExists = async (model: any, options: any, message = Message.alreadyExists) => {
+  const object = await model.findOne({
+    ...options,
   });
-  if (object) throw new AppError(message, StatusCode.conflict);
+
+  if (!object) return false;
+  throw new AppError(message, StatusCode.conflict);
 };
 
 const resourceAlreadyExistsMultipleParams = async (
@@ -37,14 +29,10 @@ const resourceAlreadyExistsMultipleParams = async (
   message = Message.alreadyExists
 ) => {
   const object = await repository.findOne({
-    where: options,
+    $or: options,
   });
-  if (object) throw new AppError(message, StatusCode.conflict);
+  if (!object) return false;
+  throw new AppError(message, StatusCode.conflict);
 };
 
-export {
-  getObjectOrThrowError,
-  resourceAlreadyExists,
-  getListOrThrowError,
-  resourceAlreadyExistsMultipleParams,
-};
+export { getObjectOrThrowError, resourceAlreadyExists, resourceAlreadyExistsMultipleParams };

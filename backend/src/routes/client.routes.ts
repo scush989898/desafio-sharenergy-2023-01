@@ -9,7 +9,6 @@ import {
   deleteClientController,
 } from "../controllers/client.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
-import validateParam from "../middlewares/validateUUID.middleware";
 
 const clientRoutes = Router();
 
@@ -21,14 +20,14 @@ clientRoutes.post(
 );
 
 clientRoutes.get("", ensureAuthMiddleware, listAllClientsController);
-clientRoutes.get("/:id", validateParam, ensureAuthMiddleware, getOneClientController);
+clientRoutes.get("/:id", ensureAuthMiddleware, getOneClientController);
 clientRoutes.patch(
   "/:id",
-  validateParam,
+
   ensureAuthMiddleware,
   validateSchema(clientUpdateSchema),
   updateClientController
 );
-clientRoutes.delete("/:id", validateParam, ensureAuthMiddleware, deleteClientController);
+clientRoutes.delete("/:id", ensureAuthMiddleware, deleteClientController);
 
 export default clientRoutes;
