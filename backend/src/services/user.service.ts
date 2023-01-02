@@ -31,7 +31,7 @@ const updateUserService = async (id: string, newData: IUserUpdateRequest): Promi
       Message.usernameAlreadyExists
     );
   }
-  await UserModel.updateOne({ _id: id }, newData);
+  await UserModel.updateOne({ _id: id }, { $set: { ...newData } });
   return await getObjectOrThrowError(UserModel, { _id: id });
 };
 

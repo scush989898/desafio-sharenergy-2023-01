@@ -1,12 +1,9 @@
 class Message {
-  static invalidCredentials: string = "Invalid credentials";
   static dataSourceInit: string = "The database has initialized";
   static errorDataSourceInit: string = "Error during data source initialization";
   static serverStarted: string = "Server is running";
-  static invalidToken: string = "Invalid token";
   static internalServerError: string = "Internal server error";
   static noPermission: string = "You dont have permission to perform this action";
-  static invalidIdFormat: string = "The provided parameter is not in valid format";
   static notFound: string = "Not found";
   static alreadyExists: string = "The resource already exists";
   static emailAlreadyExists: string = "Email address already exists";
@@ -17,9 +14,9 @@ class Message {
   static nameField: string = "Field name should not contain special characters";
   static cpfField: string = "Field CPF should contain only 11 numbers between [0-9]";
   static phoneField: string = "Field phone should contain only 11 numbers between [0-9]";
-}
-
-class SchemaMessage {
+  static invalidToken: string = "Invalid token";
+  static invalidIdFormat: string = "The provided parameter is not in valid format";
+  static invalidCredentials: string = "Invalid credentials";
   static invalidName: string = "Invalid name";
   static invalidEmail: string = "Invalid email";
   static invalidPhone: string = "Invalid phone";
@@ -32,4 +29,4 @@ class SchemaMessage {
   static invalidCPF: string = "Invalid cpf";
 }
 
-export { Message, SchemaMessage };
+export { Message };

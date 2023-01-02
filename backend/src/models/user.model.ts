@@ -32,5 +32,5 @@ const userSchema = new Schema(
     versionKey: false,
   }
 );
-export const UserModel = model("User", userSchema);
 
+export const UserModel = model("User", userSchema);
