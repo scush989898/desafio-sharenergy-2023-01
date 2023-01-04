@@ -2,6 +2,7 @@ import app from "./app";
 import { Message } from "./utils/messages.utils";
 import mongoose from "mongoose";
 import "dotenv/config";
+import { SetInitialUser } from "./initialData";
 
 (async () => {
   await mongoose
@@ -14,4 +15,5 @@ import "dotenv/config";
   app.listen(3000, () => {
     console.log(Message.serverStarted);
   });
+  await SetInitialUser();
 })();
