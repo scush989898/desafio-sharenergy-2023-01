@@ -1,8 +1,11 @@
 import { Switch, Route, useHistory } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import Login from "../pages/login";
 import { TokenContext } from "../context/token.context";
 import Main from "../pages/main";
+import HttpCat from "../pages/httpCat";
+import RandomDog from "../pages/randomDog";
+import Clients from "../pages/clients";
 
 export default function Routes() {
   const history = useHistory();
@@ -30,19 +33,19 @@ export default function Routes() {
         <Login />
       </Route>
       <Route exact path="/httpcat">
-        <h2>httpcat</h2>
+        <HttpCat />
       </Route>
       <Route exact path="/randomdog">
-        <h2>randomdog</h2>
+        <RandomDog />
       </Route>
       <Route exact path="/clients">
-        <h2>clients</h2>
+        <Clients />
       </Route>
       <Route path="*">
         <pre
           style={{
-            marginTop: "-100px",
             justifyContent: "center",
+            margin: "auto",
           }}
         >
           <img src="src/assets/404.jpg" alt="404-notfound" />

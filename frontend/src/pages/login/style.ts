@@ -12,6 +12,7 @@ export const StyledForm = styled.form`
   padding: 60px;
   align-items: center;
   justify-content: center;
+  margin: auto;
   div {
     width: 380px;
     max-width: 380px;

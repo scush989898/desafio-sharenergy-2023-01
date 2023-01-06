@@ -4,22 +4,42 @@ export const StyledNavBar = styled.nav`
   width: 100%;
   height: 6vh;
   color: white;
-  border: 1px solid white;
-  ul {
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .firstUL {
+    padding-left: 30px;
+    width: 75%;
     height: 100%;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    gap: 17px;
     justify-content: left;
-    gap: 15px;
+    align-items: center;
   }
-  a{
+  .secondUL {
+    padding-right: 30px;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+  }
+  a {
     text-decoration: none;
-    color: rgba(255,255,255,.5);
+    color: rgba(255, 255, 255, 0.5);
     text-transform: capitalize;
+    font-size: 22px;
   }
-  a:hover{
+  a:hover {
     cursor: pointer;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 550px) {
+    a {
+      font-size: 15px;
+    }
   }
 `;
