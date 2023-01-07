@@ -16,7 +16,7 @@ export default function Login() {
   } = useForm({ resolver: yupResolver(userSchema) });
 
   const history = useHistory();
-  const { token, setToken } = useContext(mainContext);
+  const { setToken } = useContext(mainContext);
 
   async function onSubmit(data: any): Promise<void> {
     await internalAPI
@@ -26,6 +26,7 @@ export default function Login() {
         if (data.remember == true) {
           localStorage.setItem("@TOKEN", res.data.token);
         } else {
+          sessionStorage.setItem("@TOKEN", res.data.token);
           localStorage.clear();
         }
         history.push("/");

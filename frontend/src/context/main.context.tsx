@@ -37,8 +37,8 @@ const initialClient: IClient = {
 const initial = {
   token: "",
   setToken: () => {},
-  isLogged: false,
-  setIsLogged: () => {},
+  // isLogged: false,
+  // setIsLogged: () => {},
   modalCreate: false,
   setModalCreate: () => {},
   modalUpdate: false,
@@ -52,8 +52,8 @@ const initial = {
 export type mainContextType = {
   token: string;
   setToken: (newState: string) => void;
-  isLogged: boolean;
-  setIsLogged: (newState: boolean) => void;
+  // isLogged: boolean;
+  // setIsLogged: (newState: boolean) => void;
   modalCreate: boolean;
   setModalCreate: (newState: boolean) => void;
   modalUpdate: boolean;
@@ -68,7 +68,6 @@ export const mainContext = createContext<mainContextType>(initial);
 
 export const MainContextProvider = ({ children }: mainContextProps): JSX.Element => {
   const [token, setToken] = useState("");
-  const [isLogged, setIsLogged] = useState(false);
   const [modalCreate, setModalCreate] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
   const [modalView, setModalView] = useState(false);
@@ -79,8 +78,6 @@ export const MainContextProvider = ({ children }: mainContextProps): JSX.Element
       value={{
         token,
         setToken,
-        isLogged,
-        setIsLogged,
         modalCreate,
         modalUpdate,
         modalView,

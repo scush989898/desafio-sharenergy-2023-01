@@ -9,20 +9,19 @@ import Clients from "../pages/clients";
 
 export default function Routes() {
   const history = useHistory();
-  const { isLogged, setIsLogged, token } = useContext(mainContext);
-  const lSTOKEN = localStorage.getItem("@TOKEN");
+  const { token, setToken } = useContext(mainContext);
+  const lSTOKEN = localStorage.getItem("@TOKEN") || sessionStorage.getItem("@TOKEN");
 
   if (!lSTOKEN && !token) {
-    setIsLogged(false);
     history.push("/login");
   }
-  if (lSTOKEN || token) {
-    setIsLogged(true);
+  if (lSTOKEN ) {
+    setToken(lSTOKEN)
   }
 
-  if (!isLogged && !lSTOKEN && !token) {
-    history.push("/login");
-  }
+  // if (!isLogged && !lSTOKEN && !token) {
+  //   history.push("/login");
+  // }
 
   return (
     <Switch>
