@@ -23,7 +23,7 @@ const createSessionService = async ({
     String(process.env.SECRET_KEY),
     {
       subject: user.id,
-      expiresIn: "1h",
+      expiresIn: "24h",
     }
   );
 
