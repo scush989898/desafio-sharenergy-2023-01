@@ -26,7 +26,7 @@ class Message {
   static invalidCity: string = "Invalid city";
   static invalidState: string = "Invalid state";
   static invalidNumber: string = "Invalid number";
-  static invalidComplement: string = "Invalid complement";
+  static invalidStreet: string = "Invalid street";
   static invalidCPF: string = "Invalid cpf";
 }
 

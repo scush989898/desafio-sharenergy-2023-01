@@ -29,9 +29,9 @@ export const addressSchema = new Schema(
       required: false,
       maxLength: 10,
     },
-    complement: {
+    street: {
       type: String,
-      required: false,
+      required: true,
       maxLength: 20,
     },
   },

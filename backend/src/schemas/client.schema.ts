@@ -22,7 +22,7 @@ const clientRegisterSchema: SchemaOf<IClientRequest> = yup.object().shape({
     city: yup.string().required().max(60, Message.invalidCity),
     state: yup.string().required().max(20, Message.invalidState),
     number: yup.string().max(10, Message.invalidNumber),
-    complement: yup.string().max(20, Message.invalidComplement),
+    street: yup.string().required().max(20, Message.invalidStreet),
   }),
   cpf: yup.string().required().max(11, Message.invalidCPF).matches(Regex.cpf, Message.cpfField),
 });
@@ -40,7 +40,7 @@ const clientUpdateSchema: SchemaOf<IClientUpdateRequest> = yup.object().shape({
     city: yup.string().max(60, Message.invalidCity),
     state: yup.string().max(20, Message.invalidState),
     number: yup.string().max(10, Message.invalidNumber),
-    complement: yup.string().max(20, Message.invalidComplement),
+    street: yup.string().max(20, Message.invalidStreet),
   }),
   cpf: yup.string().max(11, Message.invalidCPF).matches(Regex.cpf, Message.cpfField),
 });

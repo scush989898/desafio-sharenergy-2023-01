@@ -3,8 +3,8 @@ interface IClientAddressRequest {
   zipCode: string;
   city: string;
   state: string;
+  street: string;
   number?: string;
-  complement?: string;
 }
 
 interface IClientRequest {
@@ -21,7 +21,7 @@ interface IClientAddressUpdateRequest {
   city?: string;
   state?: string;
   number?: string;
-  complement?: string;
+  street?: string;
 }
 
 interface IClientUpdateRequest {
