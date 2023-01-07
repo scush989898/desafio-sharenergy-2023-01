@@ -1,7 +1,7 @@
 import { Switch, Route, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import Login from "../pages/login";
-import { TokenContext } from "../context/token.context";
+import { mainContext } from "../context/main.context";
 import Main from "../pages/main";
 import HttpCat from "../pages/httpCat";
 import RandomDog from "../pages/randomDog";
@@ -9,7 +9,7 @@ import Clients from "../pages/clients";
 
 export default function Routes() {
   const history = useHistory();
-  const { isLogged, setIsLogged, token } = useContext(TokenContext);
+  const { isLogged, setIsLogged, token } = useContext(mainContext);
   const lSTOKEN = localStorage.getItem("@TOKEN");
 
   if (!lSTOKEN && !token) {
@@ -48,7 +48,7 @@ export default function Routes() {
             margin: "auto",
           }}
         >
-          <img src="src/assets/404.jpg" alt="404-notfound" />
+          <img src="https://http.cat/404" alt="404-notfound" />
         </pre>
       </Route>
     </Switch>

@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
 * {
   font-style: normal;
   box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 24px;
@@ -20,8 +20,6 @@ body{
   background-color: #121214;
 }
 #root {
-  /* width: 100%;
-  height:100%; */
   width: 100vw;
   height:100vh;
 }
@@ -30,8 +28,6 @@ body{
   color: white;
   width: 100vw;
   height: 100vh;
-  /* display: flex; */
-  /* justify-content: center; */
 }
 
 li{

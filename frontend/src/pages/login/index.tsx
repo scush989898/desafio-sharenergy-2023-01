@@ -1,10 +1,10 @@
-import { Button, TextField, FormControlLabel, Checkbox } from "@mui/material";
+import { Button, TextField, FormControlLabel, Checkbox, Container, Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { StyledForm } from "./style";
 import { userSchema } from "../../schemas/user.schema";
 import internalAPI from "../../services/API/internal.api";
-import { TokenContext } from "../../context/token.context";
+import { mainContext } from "../../context/main.context";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export default function Login() {
   } = useForm({ resolver: yupResolver(userSchema) });
 
   const history = useHistory();
-  const { token, setToken } = useContext(TokenContext);
+  const { token, setToken } = useContext(mainContext);
 
   async function onSubmit(data: any): Promise<void> {
     await internalAPI
@@ -34,31 +34,41 @@ export default function Login() {
   }
 
   return (
-    <StyledForm action="" onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        {...register("username")}
-        error={!!errors.username}
-        label="Usuário"
-        placeholder="Usuário"
-        variant="standard"
-      />
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <StyledForm action="" onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          {...register("username")}
+          error={!!errors.username}
+          label="Usuário"
+          placeholder="Usuário"
+          variant="standard"
+        />
 
-      <TextField
-        {...register("password")}
-        error={!!errors.password}
-        type="password"
-        label="Senha"
-        placeholder="Senha"
-        variant="standard"
-      />
-      <FormControlLabel
-        {...register("remember")}
-        control={<Checkbox defaultChecked />}
-        label="Lembrar-me"
-      />
-      <Button color="inherit" variant="contained" type={"submit"}>
-        Entrar
-      </Button>
-    </StyledForm>
+        <TextField
+          {...register("password")}
+          error={!!errors.password}
+          type="password"
+          label="Senha"
+          placeholder="Senha"
+          variant="standard"
+        />
+        <FormControlLabel
+          {...register("remember")}
+          control={<Checkbox defaultChecked />}
+          label="Lembrar-me"
+        />
+        <Button color="inherit" variant="contained" type={"submit"}>
+          Entrar
+        </Button>
+      </StyledForm>
+    </Box>
   );
 }
