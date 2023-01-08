@@ -1,26 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
+import { IClientResponse } from "../interfaces/client.interface";
 
-type mainContextProps = {
-  children: ReactNode;
-};
-
-interface IClient {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  cpf: string;
-  address: {
-    district: string;
-    zipCode: string;
-    city: string;
-    state: string;
-    street: string;
-    number?: string | null | undefined;
-  };
-}
-
-const initialClient: IClient = {
+const initialClient: IClientResponse = {
   id: "",
   name: "",
   email: "",
@@ -35,10 +16,8 @@ const initialClient: IClient = {
   },
 };
 const initial = {
-  token: "",
+  token: localStorage.getItem("@TOKEN") || sessionStorage.getItem("@TOKEN"),
   setToken: () => {},
-  // isLogged: false,
-  // setIsLogged: () => {},
   modalCreate: false,
   setModalCreate: () => {},
   modalUpdate: false,
@@ -47,31 +26,46 @@ const initial = {
   setModalView: () => {},
   currentClient: initialClient,
   setCurrentClient: () => {},
+  modalError: false,
+  setModalError: () => {},
+  messageError: "",
+  setMessageError: () => {},
+};
+
+type mainContextProps = {
+  children: ReactNode;
 };
 
 export type mainContextType = {
-  token: string;
+  token: string | null;
   setToken: (newState: string) => void;
-  // isLogged: boolean;
-  // setIsLogged: (newState: boolean) => void;
   modalCreate: boolean;
   setModalCreate: (newState: boolean) => void;
   modalUpdate: boolean;
   setModalUpdate: (newState: boolean) => void;
   modalView: boolean;
   setModalView: (newState: boolean) => void;
-  currentClient: IClient;
-  setCurrentClient: (newClient: IClient) => void;
+  currentClient: IClientResponse;
+  setCurrentClient: (newClient: IClientResponse) => void;
+  modalError: boolean;
+  setModalError: (newState: boolean) => void;
+  messageError: string;
+  setMessageError: (newState: string) => void;
 };
 
 export const mainContext = createContext<mainContextType>(initial);
 
 export const MainContextProvider = ({ children }: mainContextProps): JSX.Element => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(
+    localStorage.getItem("@TOKEN") || sessionStorage.getItem("@TOKEN")
+  );
   const [modalCreate, setModalCreate] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
   const [modalView, setModalView] = useState(false);
   const [currentClient, setCurrentClient] = useState(initialClient);
+
+  const [modalError, setModalError] = useState(false);
+  const [messageError, setMessageError] = useState("");
 
   return (
     <mainContext.Provider
@@ -86,6 +80,10 @@ export const MainContextProvider = ({ children }: mainContextProps): JSX.Element
         setModalView,
         currentClient,
         setCurrentClient,
+        modalError,
+        setModalError,
+        messageError,
+        setMessageError,
       }}
     >
       {children}

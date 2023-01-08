@@ -13,34 +13,15 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import randomUserApi from "../../services/API/randomUser.api";
 import RandomCard from "../../components/randomCard";
-import { mainContext } from "../../context/main.context";
-
-interface IRandomUser {
-  name: {
-    first: string;
-    last: string;
-  };
-  email: string;
-  login: {
-    username: string;
-  };
-  dob: {
-    age: number;
-  };
-  picture: {
-    large: string;
-  };
-}
+import { IRandomUser } from "../../interfaces/general.interface";
 
 export default function Main() {
   const [currentPage, setCurrentPage] = useState(1);
   const [userList, setUserList] = useState<IRandomUser[]>([]);
   const [currentSearch, setCurrentSearch] = useState("");
-  const { token } = useContext(mainContext);
-  console.log(token);
   useEffect(() => {
     randomUserApi
       .get(`?page=${currentPage}&results=10&seed=abc`)
@@ -59,13 +40,47 @@ export default function Main() {
           height: "100%",
         }}
       >
-        <Box sx={{ backgroundColor: "white" }}>
+        <Box
+          sx={{
+            backgroundColor: "white",
+            borderRadius: "12px",
+            marginTop: "20px",
+            padding: "12px",
+          }}
+        >
           <TextField
             label="Pesquisar"
             placeholder="Pesquisar por nome, email ou username"
-            variant="standard"
+            variant="outlined"
             onChange={(e) => setCurrentSearch(e.target.value)}
+            sx={{ width: "100%" }}
           />
+        </Box>
+        <Box
+          sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "end" }}
+        >
+          <Button
+            color="inherit"
+            variant="contained"
+            disabled={currentPage == 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
+            Anterior
+          </Button>
+          <Typography
+            sx={{ width: "5%", textAlign: "center", color: "black" }}
+            variant="h6"
+            component="h2"
+          >
+            {currentPage}
+          </Typography>
+          <Button
+            color="inherit"
+            variant="contained"
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Próxima
+          </Button>
         </Box>
         <TableContainer
           component={Paper}
@@ -129,32 +144,7 @@ export default function Main() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box
-          sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
-        >
-          <Button
-            color="inherit"
-            variant="contained"
-            disabled={currentPage == 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
-          >
-            Anterior
-          </Button>
-          <Typography
-            sx={{ width: "5%", textAlign: "center", color: "white" }}
-            variant="h6"
-            component="h2"
-          >
-            {currentPage}
-          </Typography>
-          <Button
-            color="inherit"
-            variant="contained"
-            onClick={() => setCurrentPage(currentPage + 1)}
-          >
-            Próxima
-          </Button>
-        </Box>
+        
       </Container>
     </>
   );

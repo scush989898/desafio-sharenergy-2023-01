@@ -1,14 +1,7 @@
 import { TableCell, TableRow, CardMedia } from "@mui/material";
+import { IRandomCustomUser } from "../../interfaces/general.interface";
 
-interface Iprops {
-  image: string;
-  name: string;
-  email: string;
-  username: string;
-  age: number;
-}
-
-export default function RandomCard({ image, name, username, email, age }: Iprops) {
+export default function RandomCard({ image, name, username, email, age }: IRandomCustomUser) {
   return (
     <TableRow>
       <TableCell align="center">

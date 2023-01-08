@@ -1,29 +1,28 @@
 import { TableRow, TableCell, Button } from "@mui/material";
 import { useContext } from "react";
 import { mainContext } from "../../context/main.context";
+import { IClientResponse } from "../../interfaces/client.interface";
+import internalAPI from "../../services/API/internal.api";
 
-interface IClientProps {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  cpf: string;
-  address: {
-    district: string;
-    zipCode: string;
-    city: string;
-    state: string;
-    street: string ;
-    number?: string | null | undefined;
-  };
+interface IClientProps extends IClientResponse {
+  setClientList: React.Dispatch<React.SetStateAction<IClientResponse[]>>;
 }
 
-export default function ClientCard({ name, email, phone, cpf, address, id }: IClientProps) {
+export default function ClientCard({
+  name,
+  email,
+  phone,
+  cpf,
+  address,
+  id,
+  setClientList,
+}: IClientProps) {
   const { modalUpdate, setModalUpdate } = useContext(mainContext);
   const { modalView, setModalView } = useContext(mainContext);
   const { currentClient, setCurrentClient } = useContext(mainContext);
+  const { token } = useContext(mainContext);
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     setCurrentClient({ name, email, phone, cpf, address, id });
     setModalUpdate(true);
   };
@@ -32,17 +31,42 @@ export default function ClientCard({ name, email, phone, cpf, address, id }: ICl
     setModalView(true);
   };
 
-  const handleDelete = () => {
-    console.log(id);
+  const handleDelete = async () => {
+    await internalAPI
+      .delete(`/client/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res)
+      .catch((er) => console.log(er));
+    await updateListClients();
   };
+
+  const updateListClients = async () => {
+    await internalAPI
+      .get("/client", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setClientList(res.data));
+  };
+
   return (
     <TableRow>
       <TableCell align="center">{name}</TableCell>
       <TableCell align="center">{email}</TableCell>
-      <TableCell align="center">
-        <Button onClick={() => handleView()}>Visualizar</Button>
-        <Button onClick={() => handleUpdate()}>Atualizar</Button>
-        <Button onClick={() => handleDelete()}>Excluir</Button>
+      <TableCell sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+        <Button color="inherit" variant="contained" onClick={() => handleView()}>
+          Visualizar
+        </Button>
+        <Button color="inherit" variant="contained" onClick={() => handleUpdate()}>
+          Editar
+        </Button>
+        <Button color="inherit" variant="contained" onClick={() => handleDelete()}>
+          Excluir
+        </Button>
       </TableCell>
     </TableRow>
   );

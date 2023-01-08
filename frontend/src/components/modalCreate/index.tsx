@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { clientCreateSchema } from "../../schemas/client.schema";
 import internalAPI from "../../services/API/internal.api";
+import { IClientCreate, IClientResponse } from "../../interfaces/client.interface";
 
 const style = {
   position: "absolute" as "absolute",
@@ -25,9 +26,16 @@ const style = {
   alignItems: "end",
 };
 
-export default function ModalCreate() {
+interface IClientProps {
+  setClientList: React.Dispatch<React.SetStateAction<IClientResponse[]>>;
+}
+
+export default function ModalCreate({ setClientList }: IClientProps) {
   const { modalCreate, setModalCreate } = useContext(mainContext);
   const { token } = useContext(mainContext);
+  const { modalError, setModalError } = useContext(mainContext);
+  const { messageError, setMessageError } = useContext(mainContext);
+
   const handleClose = () => setModalCreate(false);
   const {
     register,
@@ -36,19 +44,33 @@ export default function ModalCreate() {
   } = useForm({ resolver: yupResolver(clientCreateSchema) });
 
   async function onSubmit(data: any): Promise<void> {
-    console.log(data);
-    console.log(token);
-    // await internalAPI
-    //   .post("/client", data, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((er) => console.log(er));
+    await handleCreate(data);
   }
+
+  const handleCreate = async (data: IClientCreate) => {
+    await internalAPI
+      .post("/client", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => updateListClients())
+      .catch((err) => {
+        setModalError(true);
+        setMessageError(err.response.data.message);
+      });
+  };
+
+  const updateListClients = async () => {
+    await internalAPI
+      .get("/client", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setClientList(res.data));
+    setModalCreate(false);
+  };
 
   return (
     <div>

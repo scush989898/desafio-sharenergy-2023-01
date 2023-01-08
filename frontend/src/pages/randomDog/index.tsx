@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button";
+import { Container, CardMedia } from "@mui/material";
 import { useEffect, useState } from "react";
 import NavBar from "../../components/navBar";
 import randomDogApi from "../../services/API/randomDog.api";
-import { StyledDiv } from "./style";
 
 export default function RandomDog() {
   const [currentImage, setCurrentImage] = useState<null | string>(null);
@@ -14,27 +14,49 @@ export default function RandomDog() {
       .then((res) =>
         setArrURL(
           res.data.filter((el: string) => {
-            return el.toLowerCase().endsWith("jpg") || el.toLowerCase().endsWith("png");
+            return !el.toLowerCase().endsWith("mp4") && !el.toLowerCase().endsWith("webm");
           })
         )
       )
-      .catch((er) => er);
+      .catch((err) => console.log(err));
   }, []);
 
-  function handleClick() {
-    const random = Math.floor(Math.random() * (arrURL.length - 0)) + 0;
-    setCurrentImage((prev) => `https://random.dog/${arrURL[random]}`);
+  async function handleClick() {
+    const min = 0;
+    const max = arrURL.length - 1;
+    const random = Math.floor(Math.random() * (max - min)) + min;
+    setCurrentImage(`https://random.dog/${arrURL[random]}`);
   }
 
   return (
     <>
       <NavBar />
-      <StyledDiv>
-        <Button color="inherit" variant="contained" onClick={() => handleClick()}>
+      <Container
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "40px",
+        }}
+      >
+        <Button
+          sx={{ width: "180px" }}
+          color="inherit"
+          variant="contained"
+          onClick={() => handleClick()}
+        >
           refresh
         </Button>
-        {currentImage != null && <img src={currentImage} alt="" />}
-      </StyledDiv>
+        {currentImage != null && (
+          <CardMedia
+            src={currentImage}
+            component="img"
+            sx={{ borderRadius: "10%", height: "390px", width: "390px", marginTop: "30px" }}
+          />
+        )}
+      </Container>
     </>
   );
 }

@@ -9,19 +9,11 @@ import Clients from "../pages/clients";
 
 export default function Routes() {
   const history = useHistory();
-  const { token, setToken } = useContext(mainContext);
-  const lSTOKEN = localStorage.getItem("@TOKEN") || sessionStorage.getItem("@TOKEN");
+  const { token } = useContext(mainContext);
 
-  if (!lSTOKEN && !token) {
+  if (!token) {
     history.push("/login");
   }
-  if (lSTOKEN ) {
-    setToken(lSTOKEN)
-  }
-
-  // if (!isLogged && !lSTOKEN && !token) {
-  //   history.push("/login");
-  // }
 
   return (
     <Switch>
@@ -43,8 +35,12 @@ export default function Routes() {
       <Route path="*">
         <pre
           style={{
+            width:"100vw",
+            height:"100vh",
+            display:"flex",
             justifyContent: "center",
-            margin: "auto",
+            alignItems:"center",
+            backgroundColor:"black"
           }}
         >
           <img src="https://http.cat/404" alt="404-notfound" />

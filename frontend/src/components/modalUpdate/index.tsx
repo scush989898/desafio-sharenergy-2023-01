@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { clientUpdateSchema } from "../../schemas/client.schema";
 import internalAPI from "../../services/API/internal.api";
+import { IClientUpdate, IClientResponse } from "../../interfaces/client.interface";
 
 const style = {
   position: "absolute" as "absolute",
@@ -25,11 +26,19 @@ const style = {
   alignItems: "end",
 };
 
-export default function ModalUpdate() {
+interface IClientProps {
+  setClientList: React.Dispatch<React.SetStateAction<IClientResponse[]>>;
+}
+
+export default function ModalUpdate({ setClientList }: IClientProps) {
   const { modalUpdate, setModalUpdate } = useContext(mainContext);
   const handleClose = () => setModalUpdate(false);
   const { currentClient, setCurrentClient } = useContext(mainContext);
   const { token } = useContext(mainContext);
+
+  const { modalError, setModalError } = useContext(mainContext);
+  const { messageError, setMessageError } = useContext(mainContext);
+
   const {
     register,
     handleSubmit,
@@ -37,19 +46,32 @@ export default function ModalUpdate() {
   } = useForm({ resolver: yupResolver(clientUpdateSchema) });
 
   async function onSubmit(data: any): Promise<void> {
-    console.log(data);
-    console.log(token);
-    // await internalAPI
-    //   .post("/client", data, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((er) => console.log(er));
+    await handleUpdate(data);
   }
+  const handleUpdate = async (data: IClientUpdate) => {
+    await internalAPI
+      .patch(`/client/${currentClient.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => updateListClients())
+      .catch((err) => {
+        setModalError(true);
+        setMessageError(err.response.data.message);
+      });
+  };
+
+  const updateListClients = async () => {
+    await internalAPI
+      .get("/client", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setClientList(res.data));
+    setModalUpdate(false);
+  };
   return (
     <div>
       <Modal

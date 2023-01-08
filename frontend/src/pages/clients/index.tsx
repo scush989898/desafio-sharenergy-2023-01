@@ -1,5 +1,4 @@
 import NavBar from "../../components/navBar";
-import { StyledDiv } from "./style";
 import {
   Paper,
   Table,
@@ -9,93 +8,122 @@ import {
   TableHead,
   TableRow,
   Button,
+  Container,
+  Box,
 } from "@mui/material";
 import ClientCard from "../../components/clientCard";
 import ModalCreate from "../../components/modalCreate";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { mainContext } from "../../context/main.context";
 import ModalUpdate from "../../components/modalUpdate";
 import ModalView from "../../components/modalView";
+import internalAPI from "../../services/API/internal.api";
+import { IClientResponse } from "../../interfaces/client.interface";
+import ModalError from "../../components/modalError";
 
 const Clients = () => {
   const { modalCreate, setModalCreate } = useContext(mainContext);
+  const { token } = useContext(mainContext);
+  const [clientList, setClientList] = useState<IClientResponse[]>([]);
+
+  useEffect(() => {
+    getClients();
+  }, []);
+
+  async function getClients() {
+    await internalAPI
+      .get("/client", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setClientList(res.data));
+  }
+
   return (
     <>
       <NavBar />
-      <Button color="inherit" variant="contained" onClick={() => setModalCreate(true)}>
-        Adicionar novo cliente
-      </Button>
-      <ModalCreate />
-      <ModalUpdate />
-      <ModalView />
-      <TableContainer component={Paper} sx={{ minWidth: 390, maxWidth: 1100 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: "bolder" }} align="center">
-                Nome
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bolder" }} align="center">
-                Email
-              </TableCell>
+      <Container
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "40px",
+        }}
+      >
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "end",
+            justifyContent: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <Button
+            sx={{ width: "190px" }}
+            color="inherit"
+            variant="contained"
+            onClick={() => setModalCreate(true)}
+          >
+            Adicionar cliente
+          </Button>
+        </Box>
+        <ModalCreate setClientList={setClientList} />
+        <ModalUpdate setClientList={setClientList} />
+        <ModalView />
+        <ModalError />
+        <TableContainer component={Paper} sx={{ minWidth: 390, maxWidth: 1200 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bolder" }} align="center">
+                  Nome
+                </TableCell>
+                <TableCell sx={{ fontWeight: "bolder" }} align="center">
+                  Email
+                </TableCell>
 
-              <TableCell sx={{ fontWeight: "bolder" }} align="center">
-                Ações
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <ClientCard
-              name={"clientenome"}
-              email={"newclient2@mail.com"}
-              phone={"11988445566"}
-              cpf={"33322299988"}
-              address={{
-                district: "bairro da lua",
-                zipCode: "45985099",
-                city: "new york",
-                state: "sao paulo",
-                number: "4562",
-                street: "rua treze",
-              }}
-              id={"9090"}
-              key={1}
-            />
-            <ClientCard
-              name={"teste2"}
-              email={"teste2@mail.com"}
-              phone={"teste2"}
-              cpf={"teste2"}
-              address={{
-                district: "assump",
-                zipCode: "teste2",
-                city: "new teste2",
-                state: "nw teste2",
-                number: "teste2",
-                street: "rua 2",
-              }}
-              id={"8888"}
-              key={2}
-            />
-            <ClientCard
-              name={"tesasasasasasaste2"}
-              email={"teste2@mail.com"}
-              phone={"teste2"}
-              cpf={"teste2"}
-              address={{
-                district: "new teste2",
-                zipCode: "teste2",
-                city: "new teste2",
-                state: "nw teste2",
-                number: "teste2",
-                street: "bairor x",
-              }}
-              id={"999999999"}
-              key={3}
-            />
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <TableCell sx={{ fontWeight: "bolder" }} align="center">
+                  Ações
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {clientList.length != 0 ? (
+                clientList.map((elem, index) => {
+                  return (
+                    <ClientCard
+                      name={elem.name}
+                      email={elem.email}
+                      phone={elem.phone}
+                      cpf={elem.cpf}
+                      address={{
+                        district: elem.address.district,
+                        zipCode: elem.address.zipCode,
+                        city: elem.address.city,
+                        state: elem.address.state,
+                        number: elem.address.number,
+                        street: elem.address.street,
+                      }}
+                      id={elem.id}
+                      key={index}
+                      setClientList={setClientList}
+                    />
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell>Não existem clientes</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
     </>
   );
 };

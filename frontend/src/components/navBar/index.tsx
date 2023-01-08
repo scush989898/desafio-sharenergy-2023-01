@@ -4,11 +4,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
+import { Link } from "@mui/material";
 
 const pages = [
-  { name: "Random Users", to: "/" },
+  { name: "Users", to: "/" },
   { name: "HttpCat", to: "/httpcat" },
-  { name: "Random Dogs", to: "/randomdog" },
+  { name: "Dogs", to: "/randomdog" },
   { name: "Clientes", to: "/clients" },
 ];
 
@@ -23,19 +24,25 @@ function NavBar() {
     localStorage.clear();
     sessionStorage.clear();
     history.push("/login");
+    location.reload();
   }
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "gray" }}>
+    <AppBar position="static" sx={{ backgroundColor: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex", gap: "10px" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "flex", gap: "5px" },
+              backgroundColor: "black",
+            }}
+          >
             {pages.map((page, index) => (
               <Button
                 key={index}
                 onClick={() => handleLink(page.to)}
-                sx={{ my: 2, color: "black", display: "block" }}
-                color="inherit"
+                sx={{ my: 2, color: "white", display: "block", cursor: "pointer" }}
                 variant="outlined"
               >
                 {page.name}
@@ -44,8 +51,7 @@ function NavBar() {
             <Button
               key={pages.length + 1}
               onClick={() => logout()}
-              sx={{ my: 2, color: "black", display: "block" }}
-              color="inherit"
+              sx={{ my: 2, color: "white", display: "block", cursor: "pointer" }}
               variant="outlined"
             >
               Logout

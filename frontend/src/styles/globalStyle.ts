@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
   font-style: normal;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px;
   line-height: 24px;
   color: #333333;
@@ -16,9 +16,6 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 
-body{
-  background-color: #121214;
-}
 #root {
   width: 100vw;
   height:100vh;
