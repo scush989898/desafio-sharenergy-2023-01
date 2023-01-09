@@ -17,9 +17,9 @@ export default function ClientCard({
   id,
   setClientList,
 }: IClientProps) {
-  const { modalUpdate, setModalUpdate } = useContext(mainContext);
-  const { modalView, setModalView } = useContext(mainContext);
-  const { currentClient, setCurrentClient } = useContext(mainContext);
+  const { setModalUpdate } = useContext(mainContext);
+  const {  setModalView } = useContext(mainContext);
+  const {  setCurrentClient } = useContext(mainContext);
   const { token } = useContext(mainContext);
 
   const handleUpdate = async () => {

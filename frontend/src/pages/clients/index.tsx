@@ -22,13 +22,13 @@ import { IClientResponse } from "../../interfaces/client.interface";
 import ModalError from "../../components/modalError";
 
 const Clients = () => {
-  const { modalCreate, setModalCreate } = useContext(mainContext);
+  const {  setModalCreate } = useContext(mainContext);
   const { token } = useContext(mainContext);
   const [clientList, setClientList] = useState<IClientResponse[]>([]);
 
   useEffect(() => {
     getClients();
-  }, []);
+  });
 
   async function getClients() {
     await internalAPI
@@ -93,7 +93,7 @@ const Clients = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {clientList.length != 0 ? (
+              {clientList.length !== 0 ? (
                 clientList.map((elem, index) => {
                   return (
                     <ClientCard

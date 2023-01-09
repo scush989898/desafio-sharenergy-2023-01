@@ -4,7 +4,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
-import { Link } from "@mui/material";
 
 const pages = [
   { name: "Users", to: "/" },

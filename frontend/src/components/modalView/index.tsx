@@ -24,7 +24,7 @@ const style = {
 export default function ModalView() {
   const { modalView, setModalView } = useContext(mainContext);
   const handleClose = () => setModalView(false);
-  const { currentClient, setCurrentClient } = useContext(mainContext);
+  const { currentClient } = useContext(mainContext);
 
   return (
     <div>

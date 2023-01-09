@@ -18,15 +18,15 @@ export default function Login() {
   const history = useHistory();
   const { setToken } = useContext(mainContext);
 
-  const { modalError, setModalError } = useContext(mainContext);
-  const { messageError, setMessageError } = useContext(mainContext);
+  const { setModalError } = useContext(mainContext);
+  const { setMessageError } = useContext(mainContext);
 
   async function onSubmit(data: any): Promise<void> {
     await internalAPI
       .post("/login", data)
       .then((res) => {
         setToken(res.data.token);
-        if (data.remember == true) {
+        if (data.remember === true) {
           localStorage.setItem("@TOKEN", res.data.token);
         } else {
           sessionStorage.setItem("@TOKEN", res.data.token);
@@ -63,7 +63,7 @@ export default function Login() {
           padding: "50px",
           alignItems: "center",
           justifyContent: "center",
-          border:"2px solid black",
+          border: "2px solid black",
         }}
       >
         <form

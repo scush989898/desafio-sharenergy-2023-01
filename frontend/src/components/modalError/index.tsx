@@ -23,7 +23,7 @@ const style = {
 
 export default function ModalError() {
   const { modalError, setModalError } = useContext(mainContext);
-  const { messageError, setMessageError } = useContext(mainContext);
+  const { messageError } = useContext(mainContext);
 
   const handleClose = () => setModalError(false);
 

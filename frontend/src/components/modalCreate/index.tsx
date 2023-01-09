@@ -33,8 +33,8 @@ interface IClientProps {
 export default function ModalCreate({ setClientList }: IClientProps) {
   const { modalCreate, setModalCreate } = useContext(mainContext);
   const { token } = useContext(mainContext);
-  const { modalError, setModalError } = useContext(mainContext);
-  const { messageError, setMessageError } = useContext(mainContext);
+  const { setModalError } = useContext(mainContext);
+  const { setMessageError } = useContext(mainContext);
 
   const handleClose = () => setModalCreate(false);
   const {

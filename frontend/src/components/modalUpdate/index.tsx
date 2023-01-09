@@ -33,11 +33,11 @@ interface IClientProps {
 export default function ModalUpdate({ setClientList }: IClientProps) {
   const { modalUpdate, setModalUpdate } = useContext(mainContext);
   const handleClose = () => setModalUpdate(false);
-  const { currentClient, setCurrentClient } = useContext(mainContext);
+  const { currentClient } = useContext(mainContext);
   const { token } = useContext(mainContext);
 
-  const { modalError, setModalError } = useContext(mainContext);
-  const { messageError, setMessageError } = useContext(mainContext);
+  const { setModalError } = useContext(mainContext);
+  const { setMessageError } = useContext(mainContext);
 
   const {
     register,

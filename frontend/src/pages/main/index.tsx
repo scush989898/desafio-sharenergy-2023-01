@@ -56,13 +56,11 @@ export default function Main() {
             sx={{ width: "100%" }}
           />
         </Box>
-        <Box
-          sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "end" }}
-        >
+        <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "end" }}>
           <Button
             color="inherit"
             variant="contained"
-            disabled={currentPage == 1}
+            disabled={currentPage === 1}
             onClick={() => setCurrentPage(currentPage - 1)}
           >
             Anterior
@@ -107,7 +105,7 @@ export default function Main() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentSearch == ""
+              {currentSearch === ""
                 ? userList.map((elem: IRandomUser, index: number) => {
                     return (
                       <RandomCard
@@ -144,7 +142,6 @@ export default function Main() {
             </TableBody>
           </Table>
         </TableContainer>
-        
       </Container>
     </>
   );
