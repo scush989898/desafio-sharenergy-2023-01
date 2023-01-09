@@ -1,8 +1,0 @@
-.git
-.vscode
-*Dockerfile*
-*docker-compose*
-dist/
-yarn.lock
-node_modules
-.env

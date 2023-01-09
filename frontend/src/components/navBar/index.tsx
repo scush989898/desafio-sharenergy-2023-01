@@ -24,7 +24,7 @@ function NavBar() {
     localStorage.clear();
     sessionStorage.clear();
     history.push("/login");
-    location.reload();
+    window.location.reload();
   }
 
   return (
