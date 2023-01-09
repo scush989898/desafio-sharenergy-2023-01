@@ -63,7 +63,7 @@ export default function Login() {
           padding: "50px",
           alignItems: "center",
           justifyContent: "center",
-          border:"2px solid black"
+          border:"2px solid black",
         }}
       >
         <form

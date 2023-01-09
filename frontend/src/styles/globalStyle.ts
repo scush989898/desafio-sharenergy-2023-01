@@ -22,7 +22,6 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 .App {
-  color: white;
   width: 100vw;
   height: 100vh;
 }
@@ -38,5 +37,11 @@ button {
 }
 button:disabled{
   cursor: not-allowed;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 `;

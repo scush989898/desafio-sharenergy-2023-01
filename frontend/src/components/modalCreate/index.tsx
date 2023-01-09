@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { clientCreateSchema } from "../../schemas/client.schema";
 import internalAPI from "../../services/API/internal.api";
-import { IClientCreate, IClientResponse } from "../../interfaces/client.interface";
+import { IClientCreate, IClientResponse, FormData } from "../../interfaces/client.interface";
 
 const style = {
   position: "absolute" as "absolute",
@@ -41,7 +41,7 @@ export default function ModalCreate({ setClientList }: IClientProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(clientCreateSchema) });
+  } = useForm<FormData>({ resolver: yupResolver(clientCreateSchema) });
 
   async function onSubmit(data: any): Promise<void> {
     await handleCreate(data);
@@ -110,7 +110,6 @@ export default function ModalCreate({ setClientList }: IClientProps) {
                 label="Nome"
                 placeholder="Nome"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("email")}
@@ -119,7 +118,6 @@ export default function ModalCreate({ setClientList }: IClientProps) {
                 label="Email"
                 placeholder="Email"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("phone")}
@@ -128,7 +126,6 @@ export default function ModalCreate({ setClientList }: IClientProps) {
                 label="Telefone"
                 placeholder="Telefone"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("cpf")}
@@ -137,20 +134,18 @@ export default function ModalCreate({ setClientList }: IClientProps) {
                 label="CPF"
                 placeholder="CPF"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("address.street")}
-                error={!!errors.address}
+                error={!!errors.address?.street}
                 sx={{ marginBottom: "10px" }}
                 label="Rua"
                 placeholder="Rua"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("address.number")}
-                error={!!errors.address}
+                error={!!errors.address?.number}
                 sx={{ marginBottom: "10px" }}
                 label="Número"
                 placeholder="Número"
@@ -158,39 +153,35 @@ export default function ModalCreate({ setClientList }: IClientProps) {
               />
               <TextField
                 {...register("address.district")}
-                error={!!errors.address}
+                error={!!errors.address?.district}
                 sx={{ marginBottom: "10px" }}
                 label="Bairro"
                 placeholder="Bairro"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("address.city")}
-                error={!!errors.address}
+                error={!!errors.address?.city}
                 sx={{ marginBottom: "10px" }}
                 label="Cidade"
                 placeholder="Cidade"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("address.state")}
-                error={!!errors.address}
+                error={!!errors.address?.state}
                 sx={{ marginBottom: "10px" }}
                 label="Estado"
                 placeholder="Estado"
                 variant="standard"
-                required
               />
               <TextField
                 {...register("address.zipCode")}
-                error={!!errors.address}
+                error={!!errors.address?.zipCode}
                 sx={{ marginBottom: "10px" }}
                 label="CEP"
                 placeholder="CEP"
                 variant="standard"
-                required
               />
               <Button
                 color="inherit"

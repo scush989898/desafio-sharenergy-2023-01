@@ -8,7 +8,7 @@ import { Link } from "@mui/material";
 
 const pages = [
   { name: "Users", to: "/" },
-  { name: "HttpCat", to: "/httpcat" },
+  { name: "Cats", to: "/httpcat" },
   { name: "Dogs", to: "/randomdog" },
   { name: "Clientes", to: "/clients" },
 ];
@@ -42,7 +42,14 @@ function NavBar() {
               <Button
                 key={index}
                 onClick={() => handleLink(page.to)}
-                sx={{ my: 2, color: "white", display: "block", cursor: "pointer" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  cursor: "pointer",
+                  fontSize: "13.4px",
+                  padding: "5px 3px",
+                }}
                 variant="outlined"
               >
                 {page.name}
@@ -51,7 +58,14 @@ function NavBar() {
             <Button
               key={pages.length + 1}
               onClick={() => logout()}
-              sx={{ my: 2, color: "white", display: "block", cursor: "pointer" }}
+              sx={{
+                my: 2,
+                color: "white",
+                display: "block",
+                cursor: "pointer",
+                fontSize: "13.4px",
+                padding: "5px 3px",
+              }}
               variant="outlined"
             >
               Logout

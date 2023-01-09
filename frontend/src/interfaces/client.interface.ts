@@ -43,3 +43,18 @@ export interface IClientResponse {
     number?: string | null | undefined;
   };
 }
+
+export type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  cpf: string;
+  address: {
+    district: string;
+    zipCode: string;
+    city: string;
+    state: string;
+    street: string;
+    number?: string | null | undefined;
+  };
+};

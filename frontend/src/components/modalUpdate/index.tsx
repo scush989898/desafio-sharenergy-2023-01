@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { clientUpdateSchema } from "../../schemas/client.schema";
 import internalAPI from "../../services/API/internal.api";
-import { IClientUpdate, IClientResponse } from "../../interfaces/client.interface";
+import { IClientUpdate, IClientResponse, FormData } from "../../interfaces/client.interface";
 
 const style = {
   position: "absolute" as "absolute",
@@ -43,7 +43,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(clientUpdateSchema) });
+  } = useForm<FormData>({ resolver: yupResolver(clientUpdateSchema) });
 
   async function onSubmit(data: any): Promise<void> {
     await handleUpdate(data);
@@ -141,7 +141,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
               />
               <TextField
                 {...register("address.street")}
-                error={!!errors.address}
+                error={!!errors.address?.street}
                 sx={{ marginBottom: "10px" }}
                 label="Rua"
                 placeholder="Rua"
@@ -150,7 +150,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
               />
               <TextField
                 {...register("address.number")}
-                error={!!errors.address}
+                error={!!errors.address?.number}
                 sx={{ marginBottom: "10px" }}
                 label="Número"
                 placeholder="Número"
@@ -159,7 +159,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
               />
               <TextField
                 {...register("address.district")}
-                error={!!errors.address}
+                error={!!errors.address?.district}
                 sx={{ marginBottom: "10px" }}
                 label="Bairro"
                 placeholder="Bairro"
@@ -169,7 +169,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
 
               <TextField
                 {...register("address.city")}
-                error={!!errors.address}
+                error={!!errors.address?.city}
                 sx={{ marginBottom: "10px" }}
                 label="Cidade"
                 placeholder="Cidade"
@@ -178,7 +178,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
               />
               <TextField
                 {...register("address.state")}
-                error={!!errors.address}
+                error={!!errors.address?.state}
                 sx={{ marginBottom: "10px" }}
                 label="Estado"
                 placeholder="Estado"
@@ -187,7 +187,7 @@ export default function ModalUpdate({ setClientList }: IClientProps) {
               />
               <TextField
                 {...register("address.zipCode")}
-                error={!!errors.address}
+                error={!!errors.address?.zipCode}
                 sx={{ marginBottom: "10px" }}
                 label="CEP"
                 placeholder="CEP"
