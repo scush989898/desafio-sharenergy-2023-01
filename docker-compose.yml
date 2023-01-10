@@ -8,25 +8,25 @@ services:
     volumes:
       - mongodb:/data/db
 
-  api:
-    container_name: api
+  backend:
+    container_name: backend
     build: ./backend
     ports:
       - 3000:3000
     environment:
       - MONGOURL=mongodb://db:27017/share_energy
       - SECRET_KEY=fd646e72d5d68a572aa5ec954928c6fb0ceb2a0cab1fc399775716f8b83bf207
-    volumes:
-      - ./backend/.:/app
     depends_on:
       - db
 
   frontend:
-    build: ./frontend
     container_name: frontend
+    build: ./frontend
     stdin_open: true
     tty: true
     ports:
-      - "4000:4000"
+      - 4000:4000
+    depends_on:
+      - backend
 volumes:
   mongodb:
