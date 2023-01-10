@@ -2,10 +2,12 @@ FROM node:16.17.0
 
 WORKDIR /app
 
-COPY "package.json" .
+COPY package.json .
 
-RUN yarn
+RUN yarn 
 
-COPY . /app/
+COPY . .
+
+EXPOSE 3000
 
 CMD ["yarn", "dev"]
